@@ -9,8 +9,8 @@ class PostgresSingleton {
   private constructor() { }
 
   public static getInstance(): Pool {
+    console.log('PostgresSingleton', PostgresSingleton.instance);
     if (!PostgresSingleton.instance) {
-      console.log('🌀 Initializing PostgreSQL Pool...');
       PostgresSingleton.instance = new Pool({
         connectionString: process.env.DATABASE_URL,
       });
@@ -27,6 +27,7 @@ class PostgresSingleton {
       PostgresSingleton.instance.on('remove', () => {
         console.log('🧹 DB client removed from pool');
       });
+      // console.log('PostgresSingleton end++', PostgresSingleton.instance);
 
       // Optional: override query to track duration
     }

@@ -1,23 +1,18 @@
 import express from 'express';
 import { attachDb } from './middleware/db/attachDb';
-import { UserController } from './controller/UserController';
-import { TaskController } from './controller/TaskController';
+import userRoute from './routes/user.route';
+import taskRoute from './routes/task.route';
 
 const app = express();
 app.use(express.json());
 app.use(attachDb);
 
-const userController = new UserController();
+app.use('/user', userRoute);
 
-const taskController = new TaskController();
-
-app.get('/getuser', userController.getUser.bind(userController));
-
-app.post('/users', userController.registerUser.bind(userController));
-
-app.get('/created_tasks', taskController.getUserTasks.bind(taskController));
+app.get('/tasks', taskRoute);
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
